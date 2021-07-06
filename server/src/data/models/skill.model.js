@@ -8,6 +8,12 @@ const SkillModelSchema = new Schema({
     collections: 'skills'
 });
 
+SkillModelSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) { delete ret._id }
+});
+
 const SkillModel = mongoose.model('SkillModel', SkillModelSchema);
 
 module.exports = SkillModel;

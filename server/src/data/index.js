@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DATABASE_URI = "mongodb://localhost:27017/aboutme";
 
 const connectDatabase = () => {
-    mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 
     mongoose.connection.on('connected', () => {
         console.log('Connection to the database opened');
