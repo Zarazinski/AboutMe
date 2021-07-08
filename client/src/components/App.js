@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import { Component } from "react";
+
+import SkillsList from "./SkillsList";
 
 class App extends Component {
     constructor(props) {
@@ -26,8 +28,8 @@ class App extends Component {
                         isLoaded: false,
                         error
                     });
-                }
-            );
+                })
+            .catch(console.error);
     }
 
     render() {
@@ -37,13 +39,7 @@ class App extends Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>
         } else {
-            return (
-                <ul>
-                    {skills.map(skill => (
-                        <li>{JSON.stringify(skill)}</li>
-                    ))}
-                </ul>
-            );
+            return <SkillsList skills={skills} />
         }
     }
 }
