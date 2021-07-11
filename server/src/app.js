@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const skillsRouter = require('./routes/skills.route');
+const introsRouter = require('./routes/intros.route');
 const { connectDatabase } = require('./data');
 
 connectDatabase();
@@ -16,5 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/skills', skillsRouter);
+app.use('/intros', introsRouter);
 
 module.exports = app;
