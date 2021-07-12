@@ -1,5 +1,6 @@
 import { Component } from "react";
 
+import Header from "./Header";
 import SkillsList from "./SkillsList";
 
 class App extends Component {
@@ -7,7 +8,9 @@ class App extends Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
+            introsLoaded: false,
+            intros: [],
+            skillsLoaded: false,
             skills: []
         };
     }
@@ -17,29 +20,51 @@ class App extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result)
+                    console.log(result);
                     this.setState({
-                        isLoaded: true,
+                        skillsLoaded: true,
                         skills: result
                     });
                 },
                 (error) => {
                     this.setState({
-                        isLoaded: false,
+                        skillsLoaded: false,
                         error
                     });
-                })
-            .catch(console.error);
+                }
+            ).catch(console.error);
+
+        fetch("http://localhost:3000/intros")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({
+                        introsLoaded: true,
+                        intros: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        introsLoaded: false,
+                        error
+                    });
+                }
+            ).catch(console.error);
     }
 
     render() {
-        const { error, isLoaded, skills } = this.state;
+        const { error, introsLoaded, intros, skillsLoaded, skills } = this.state;
         if (error) {
             return <div>Error: {error.message} </div>
-        } else if (!isLoaded) {
+        } else if (!skillsLoaded || !introsLoaded) {
             return <div>Loading...</div>
         } else {
-            return <SkillsList skills={skills} />
+            console.log(intros.find(intro => intro.active));
+            return <div>
+                <Header intro={intros.find(intro => intro.active)} />
+                <SkillsList skills={skills} />
+            </div>
         }
     }
 }
