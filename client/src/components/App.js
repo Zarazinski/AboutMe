@@ -1,4 +1,5 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Header from "./Header";
 import SkillsList from "./SkillsList";
@@ -57,14 +58,16 @@ class App extends Component {
         const { error, introsLoaded, intros, skillsLoaded, skills } = this.state;
         if (error) {
             return <div>Error: {error.message} </div>
-        } else if (!skillsLoaded || !introsLoaded) {
-            return <div>Loading...</div>
+        } else if (skillsLoaded && introsLoaded) {
+            return (
+                <Fragment>
+                    <CssBaseline />
+                    <Header intro={intros.find(intro => intro.active)} />
+                    <SkillsList skills={skills} />
+                </Fragment>
+            );
         } else {
-            console.log(intros.find(intro => intro.active));
-            return <div>
-                <Header intro={intros.find(intro => intro.active)} />
-                <SkillsList skills={skills} />
-            </div>
+            return "";
         }
     }
 }
