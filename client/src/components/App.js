@@ -1,7 +1,7 @@
 import { Component, Fragment } from "react";
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline, Container, Grid } from '@material-ui/core';
 
-import Header from "./Header";
+import Intro from "./Intro";
 import SkillsList from "./SkillsList";
 
 class App extends Component {
@@ -62,8 +62,14 @@ class App extends Component {
             return (
                 <Fragment>
                     <CssBaseline />
-                    <Header intro={intros.find(intro => intro.active)} />
-                    <SkillsList skills={skills} />
+                    <Container maxWidth="sm">
+                        <Intro intro={intros.find(intro => intro.active)} />
+                        <Grid container direction="column" aligItems="center">
+                            <Grid item>
+                                <SkillsList skills={skills} />
+                            </Grid>
+                        </Grid>
+                    </Container>
                 </Fragment>
             );
         } else {

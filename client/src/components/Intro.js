@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-class Header extends Component {
+class Intro extends Component {
     constructor(props) {
         super(props);
         console.log(props);
@@ -16,4 +16,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default Intro;

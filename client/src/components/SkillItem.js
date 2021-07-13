@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { ListItem, ListItemText } from "@material-ui/core";
 
 class SkillItem extends Component {
     constructor(props) {
@@ -9,9 +10,9 @@ class SkillItem extends Component {
 
     render() {
         return (
-            <li>
-                {this.description}, Level: {this.level}
-            </li>
+            <ListItem>
+                <ListItemText primary={this.description} secondary={"Level: " + this.level} />
+            </ListItem>
         )
     }
 }
