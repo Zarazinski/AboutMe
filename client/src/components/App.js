@@ -4,6 +4,8 @@ import { CssBaseline, Container, Grid } from '@material-ui/core';
 import Intro from "./Intro";
 import SkillsList from "./SkillsList";
 
+const BASE_URL = "http://localhost:3000";
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -17,25 +19,12 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:3000/skills")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    this.setState({
-                        skillsLoaded: true,
-                        skills: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        skillsLoaded: false,
-                        error
-                    });
-                }
-            ).catch(console.error);
+        this.fetchSkills();
+        this.fetchIntros();
+    }
 
-        fetch("http://localhost:3000/intros")
+    fetchIntros() {
+        fetch(BASE_URL + "/intros")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -48,6 +37,26 @@ class App extends Component {
                 (error) => {
                     this.setState({
                         introsLoaded: false,
+                        error
+                    });
+                }
+            ).catch(console.error);
+    }
+
+    fetchSkills() {
+        fetch(BASE_URL + "/skills")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({
+                        skillsLoaded: true,
+                        skills: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        skillsLoaded: false,
                         error
                     });
                 }

@@ -1,4 +1,5 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
+import { Typography } from "@material-ui/core";
 
 class Intro extends Component {
     constructor(props) {
@@ -9,9 +10,14 @@ class Intro extends Component {
 
     render() {
         return (
-            <div>
-                {this.description}
-            </div>
+            <Fragment>
+                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                    About me
+                </Typography>
+                <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    {this.description}
+                </Typography>
+            </Fragment>
         )
     }
 }
