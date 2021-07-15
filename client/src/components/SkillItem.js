@@ -1,19 +1,36 @@
 import { Component } from "react";
-import { ListItem, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemText, TextField } from "@material-ui/core";
 
 class SkillItem extends Component {
     constructor(props) {
         super(props);
-        this.description = props.data.description;
-        this.level = props.data.level;
+        this.state = {
+            description: props.data.description,
+            level: props.data.level,
+            editMode: false,
+        }
+    }
+
+    toggleEditMode = () => {
+        this.setState(prevState => ({ editMode: !prevState.editMode }));
     }
 
     render() {
-        return (
-            <ListItem>
-                <ListItemText primary={this.description} secondary={"Level: " + this.level} />
-            </ListItem>
-        )
+        let { description, level, editMode } = this.state;
+
+        if (editMode) {
+            return (
+                <ListItem>
+                    <TextField onClick={this.toggleEditMode} value={description} onChange={(e) => this.setState({ description: e.target.value })} />
+                </ListItem>
+            )
+        } else {
+            return (
+                <ListItem>
+                    <ListItemText onClick={this.toggleEditMode} primary={description} secondary={"Level: " + level} />
+                </ListItem>
+            )
+        }
     }
 }
 
