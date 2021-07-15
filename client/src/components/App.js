@@ -1,10 +1,11 @@
 import { Component, Fragment } from "react";
-import { CssBaseline, Container, Grid } from '@material-ui/core';
+import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
 
 import Intro from "./Intro";
 import SkillsList from "./SkillsList";
 
 const BASE_URL = "http://localhost:3000";
+
 
 class App extends Component {
     constructor(props) {
@@ -71,11 +72,20 @@ class App extends Component {
             return (
                 <Fragment>
                     <CssBaseline />
-                    <Container maxWidth="sm">
+                    <Container maxWidth="md">
+
                         <Intro intro={intros.find(intro => intro.active)} />
-                        <Grid container direction="column" aligItems="center">
+
+                        <Grid container direction="column" aligItems="center" spacing={1}>
                             <Grid item>
-                                <SkillsList skills={skills} />
+                                <Card>
+                                    <SkillsList skills={skills} />
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card>
+                                    <SkillsList skills={skills} />
+                                </Card>
                             </Grid>
                         </Grid>
                     </Container>

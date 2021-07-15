@@ -10,7 +10,7 @@ class SkillItem extends Component {
 
     render() {
         return (
-            <ListItem divider={true}>
+            <ListItem>
                 <ListItemText primary={this.description} secondary={"Level: " + this.level} />
             </ListItem>
         )
