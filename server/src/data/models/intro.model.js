@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { applyToJSON } = require('./utils/transformations');
 const Schema = mongoose.Schema;
 
 const IntroModelSchema = new Schema({
@@ -8,11 +9,7 @@ const IntroModelSchema = new Schema({
     collections: 'intros'
 });
 
-IntroModelSchema.set('toJSON', {
-    virtuals: true,
-    versionKey: false,
-    transform: (doc, ret) => { delete ret._id }
-});
+applyToJSON(IntroModelSchema);
 
 const IntroModel = mongoose.model('IntroModel', IntroModelSchema);
 
