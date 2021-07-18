@@ -1,8 +1,8 @@
 import { Component, Fragment } from "react";
 import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
 
-import Intro from "./Intro";
-import SkillsList from "./SkillsList";
+import Intro from "./intro/Intro";
+import SkillsList from "./skills/SkillsList";
 
 const BASE_URL = "http://localhost:3000";
 

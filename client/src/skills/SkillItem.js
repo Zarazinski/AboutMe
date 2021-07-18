@@ -8,7 +8,7 @@ class SkillItem extends Component {
             description: props.data.description,
             level: props.data.level,
             editMode: false,
-        }
+        };
     }
 
     toggleEditMode = () => {
@@ -23,13 +23,13 @@ class SkillItem extends Component {
                 <ListItem>
                     <TextField onClick={this.toggleEditMode} value={description} onChange={(e) => this.setState({ description: e.target.value })} />
                 </ListItem>
-            )
+            );
         } else {
             return (
                 <ListItem>
                     <ListItemText onClick={this.toggleEditMode} primary={description} secondary={"Level: " + level} />
                 </ListItem>
-            )
+            );
         }
     }
 }

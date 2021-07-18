@@ -14,7 +14,7 @@ class SkillsList extends Component {
             <List>
                 {this.skills.map(skill => <SkillItem key={skill.id} data={skill} />)}
             </List>
-        )
+        );
     }
 }
 
