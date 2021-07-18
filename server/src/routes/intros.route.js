@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const newIntro = req.body;
-    console.log(req.body);
     const introCreated = await IntroService.create(newIntro);
     res.send(introCreated.toJSON());
 });

@@ -18,10 +18,10 @@ module.exports = class IntrosRepository {
     }
 
     static async remove(introId) {
-        return await IntroModel.findByIdAndRemove(introId);
+        return await IntroModel.findByIdAndDelete(introId);
     }
 
     static async update(intro) {
         return await IntroModel.findByIdAndUpdate(intro.id, intro);
     }
-}
+};

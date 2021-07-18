@@ -20,4 +20,4 @@ module.exports = class IntrosService {
     static async delete(introId) {
         return await IntrosRepository.remove(introId);
     }
-}
+};
