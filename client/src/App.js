@@ -3,6 +3,7 @@ import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
 
 import Intro from "./intro/Intro";
 import SkillsList from "./skills/SkillsList";
+import BooksList from "./books/BooksList";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -67,7 +68,7 @@ class App extends Component {
     render() {
         const { error, introsLoaded, intros, skillsLoaded, skills } = this.state;
         if (error) {
-            return <div>Error: {error.message} </div>
+            return (<div>Error: {error.message} </div>);
         } else if (skillsLoaded && introsLoaded) {
             return (
                 <Fragment>
@@ -85,6 +86,11 @@ class App extends Component {
                             <Grid item>
                                 <Card>
                                     <SkillsList skills={skills} />
+                                </Card>
+                            </Grid>
+                            <Grid item>
+                                <Card>
+                                    <BooksList />
                                 </Card>
                             </Grid>
                         </Grid>
