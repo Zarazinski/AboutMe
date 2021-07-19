@@ -1,5 +1,6 @@
 import { List } from "@material-ui/core";
 import React, { Component } from "react";
+import * as BooksAPI from "./BooksAPI";
 
 class BooksList extends Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class BooksList extends Component {
     }
 
     componentDidMount() {
-        this.setState({ books: ["no book"] });
+        BooksAPI.getBooks()
+            .then(response => response.json())
+            .then(books => this.setState({ books: books }));
     }
 
     render() {
