@@ -3,7 +3,7 @@ import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
 
 import Intro from "./intro/Intro";
 import SkillsList from "./skills/SkillsList";
-import BooksList from "./books/BooksList";
+import BooksTable from "./books/BooksTable";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -90,7 +90,7 @@ class App extends Component {
                             </Grid>
                             <Grid item>
                                 <Card>
-                                    <BooksList />
+                                    <BooksTable />
                                 </Card>
                             </Grid>
                         </Grid>

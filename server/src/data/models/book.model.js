@@ -4,10 +4,10 @@ const { applyToJSON } = require('./utils/transformations');
 const Schema = mongoose.Schema;
 
 const BookModelSchema = new Schema({
-    description: { type: String, required: true },
     title: { type: String, required: true },
     authors: { type: String, required: true },
-    readTime: { type: Date, required: true },
+    readDate: { type: Date, required: true },
+    description: { type: String, required: false },
 }, {
     collections: 'books'
 });
