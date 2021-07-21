@@ -3,6 +3,7 @@ const { applyToJSON } = require('./utils/transformations');
 const Schema = mongoose.Schema;
 
 const ProjectModelSchema = new Schema({
+    name: {type: String, required: true},
     description: { type: String, required: true },
     link: { type: String, required: true },
     technologies: [{ type: String }]
