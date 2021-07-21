@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+const { applyToJSON } = require('./utils/transformations');
+const Schema = mongoose.Schema;
+
+const ProjectModelSchema = new Schema({
+    description: { type: String, required: true },
+    link: { type: String, required: true },
+    technologies: [{ type: String }]
+}, {
+    collections: 'projects'
+});
+
+applyToJSON(ProjectModelSchema);
+
+const ProjectModel = mongoose.model('ProjectModel', ProjectModelSchema);
+
+module.exports = ProjectModel;
