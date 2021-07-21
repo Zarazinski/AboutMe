@@ -5,6 +5,7 @@ const logger = require('morgan');
 const skillsRouter = require('./routes/skills.route');
 const introsRouter = require('./routes/intros.route');
 const booksRouter = require('./routes/books.route');
+const projectsRouter = require('./routes/projects.route');
 const { connectDatabase } = require('./data');
 
 connectDatabase();
@@ -20,5 +21,6 @@ app.use(cookieParser());
 app.use('/skills', skillsRouter);
 app.use('/intros', introsRouter);
 app.use('/books', booksRouter);
+app.use('/projects', projectsRouter);
 
 module.exports = app;
