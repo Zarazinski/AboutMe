@@ -4,6 +4,7 @@ import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
 import Intro from "./intro/Intro";
 import SkillsList from "./skills/SkillsList";
 import BooksTable from "./books/BooksTable";
+import ProjectsView from "./projects/ProjectsView";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -92,6 +93,9 @@ class App extends Component {
                                 <Card>
                                     <BooksTable />
                                 </Card>
+                            </Grid>
+                            <Grid item>
+                                <ProjectsView />
                             </Grid>
                         </Grid>
                     </Container>

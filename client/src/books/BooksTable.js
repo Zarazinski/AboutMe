@@ -1,4 +1,4 @@
-import { Table, TableContainer, Paper, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
 import React, { Component } from "react";
 import * as BooksAPI from "./BooksAPI";
 
@@ -18,7 +18,7 @@ class BooksTable extends Component {
 
     render() {
         return (
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow>
