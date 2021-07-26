@@ -16,13 +16,10 @@ class App extends Component {
             error: null,
             introsLoaded: false,
             intros: [],
-            skillsLoaded: false,
-            skills: []
         };
     }
 
     componentDidMount() {
-        this.fetchSkills();
         this.fetchIntros();
     }
 
@@ -46,31 +43,11 @@ class App extends Component {
             ).catch(console.error);
     }
 
-    fetchSkills() {
-        fetch(BASE_URL + "/skills")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    this.setState({
-                        skillsLoaded: true,
-                        skills: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        skillsLoaded: false,
-                        error
-                    });
-                }
-            ).catch(console.error);
-    }
-
     render() {
-        const { error, introsLoaded, intros, skillsLoaded, skills } = this.state;
+        const { error, introsLoaded, intros } = this.state;
         if (error) {
             return (<div>Error: {error.message} </div>);
-        } else if (skillsLoaded && introsLoaded) {
+        } else if (introsLoaded) {
             return (
                 <Fragment>
                     <CssBaseline />
@@ -81,12 +58,12 @@ class App extends Component {
                         <Grid container direction="column" aligItems="center" spacing={1}>
                             <Grid item>
                                 <Card>
-                                    <SkillsList skills={skills} />
+                                    <SkillsList />
                                 </Card>
                             </Grid>
                             <Grid item>
                                 <Card>
-                                    <SkillsList skills={skills} />
+                                    <SkillsList />
                                 </Card>
                             </Grid>
                             <Grid item>
