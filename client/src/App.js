@@ -16,7 +16,7 @@ class App extends Component {
 
                     <Intro />
 
-                    <Grid container direction="column" aligItems="center" spacing={1}>
+                    <Grid container direction="column" spacing={1}>
                         <Grid item>
                             <Card>
                                 <SkillsList />

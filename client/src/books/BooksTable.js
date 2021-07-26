@@ -29,7 +29,7 @@ class BooksTable extends Component {
                     </TableHead>
                     <TableBody>
                         {this.state.books.map((book) => (
-                            <TableRow>
+                            <TableRow key={book.id}>
                                 <TableCell>{book.title}</TableCell>
                                 <TableCell align="right">{book.authors}</TableCell>
                                 <TableCell align="right">{book.readDate}</TableCell>
