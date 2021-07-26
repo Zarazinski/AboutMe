@@ -1,11 +1,24 @@
 import { Component, Fragment } from "react";
 import { Typography } from "@material-ui/core";
 
+import * as IntrosAPI from "./IntroAPI";
+
 class Intro extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
-        this.description = props.intro.description;
+        this.state = {
+            intros: [],
+            activeIntro: ""
+        };
+    }
+
+    componentDidMount() {
+        IntrosAPI.getIntros()
+            .then(response => response.json())
+            .then(intros => this.setState({
+                intros: intros,
+                activeIntro: intros.find(intro => intro.active)
+            }));
     }
 
     render() {
@@ -15,10 +28,10 @@ class Intro extends Component {
                     About me
                 </Typography>
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                    {this.description}
+                    {this.state.activeIntro.description}
                 </Typography>
             </Fragment>
-        )
+        );
     }
 }
 
