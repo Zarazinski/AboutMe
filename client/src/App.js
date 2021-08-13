@@ -24,11 +24,6 @@ class App extends Component {
                         </Grid>
                         <Grid item>
                             <Card>
-                                <SkillsList />
-                            </Card>
-                        </Grid>
-                        <Grid item>
-                            <Card>
                                 <BooksTable />
                             </Card>
                         </Grid>
