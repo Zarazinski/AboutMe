@@ -1,5 +1,5 @@
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Box, Typography, Paper } from "@material-ui/core";
 import * as BooksAPI from "./BooksAPI";
 
 class BooksTable extends Component {
@@ -18,26 +18,36 @@ class BooksTable extends Component {
 
     render() {
         return (
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell align="right">Author</TableCell>
-                            <TableCell align="right">Read Date</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.books.map((book) => (
-                            <TableRow key={book.id}>
-                                <TableCell>{book.title}</TableCell>
-                                <TableCell align="right">{book.authors}</TableCell>
-                                <TableCell align="right">{book.readDate}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Fragment>
+                <Box my={2}>
+                    <Typography align="center" variant="h4" color="textSecondary">
+                        My bookshelf
+                    </Typography>
+                </Box>
+
+                <Paper elevation={0}>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Title</TableCell>
+                                    <TableCell align="right">Author</TableCell>
+                                    <TableCell align="right">Read Date</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.books.map((book) => (
+                                    <TableRow key={book.id}>
+                                        <TableCell>{book.title}</TableCell>
+                                        <TableCell align="right">{book.authors}</TableCell>
+                                        <TableCell align="right">{book.readDate}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
+            </Fragment>
         );
     }
 }

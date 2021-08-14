@@ -1,5 +1,5 @@
 import { Component, Fragment } from "react";
-import { CssBaseline, Container, Grid, Card } from '@material-ui/core';
+import { CssBaseline, Container, Grid } from '@material-ui/core';
 
 import Intro from "./intro/Intro";
 import SkillsList from "./skills/SkillsList";
@@ -18,14 +18,10 @@ class App extends Component {
 
                     <Grid container direction="column" spacing={1}>
                         <Grid item>
-                            <Card>
-                                <SkillsList />
-                            </Card>
+                            <SkillsList />
                         </Grid>
                         <Grid item>
-                            <Card>
-                                <BooksTable />
-                            </Card>
+                            <BooksTable />
                         </Grid>
                         <Grid item>
                             <ProjectsView />
