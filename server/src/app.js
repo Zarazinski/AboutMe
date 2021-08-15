@@ -22,5 +22,6 @@ app.use('/skills', skillsRouter);
 app.use('/intros', introsRouter);
 app.use('/books', booksRouter);
 app.use('/projects', projectsRouter);
+app.use(express.static('src/public'));
 
 module.exports = app;

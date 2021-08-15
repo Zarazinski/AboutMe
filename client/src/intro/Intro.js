@@ -50,6 +50,7 @@ class Intro extends Component {
                     <Grid item xs={4} className={classes.center}>
                         <Avatar
                             alt="It's me"
+                            src="img/avatar.jpg"
                             className={classes.large}
                         />
                     </Grid>
