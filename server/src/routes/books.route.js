@@ -1,13 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const BooksService = require('../services/books.service');
+const auth = require('../auth/basic.auth');
+
+const router = express.Router();
 
 router.get('/', async (req, res) => {
     const books = await BooksService.getAll();
     res.send(books);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const newBook = req.body;
     const bookCreated = await BooksService.create(newBook);
     res.send(bookCreated.toJSON());
@@ -23,7 +25,7 @@ router.get('/:bookId', async (res, req, next) => {
     res.send(book.toJSON());
 });
 
-router.put('/:bookId', async (req, res) => {
+router.put('/:bookId', auth, async (req, res) => {
     const book = req.body;
     book.id = req.params.bookId;
 
@@ -32,7 +34,7 @@ router.put('/:bookId', async (req, res) => {
     res.send(bookUpdated.toJSON());
 });
 
-router.delete('/:bookId', async (req, res) => {
+router.delete('/:bookId', auth, async (req, res) => {
     const bookId = req.params.bookId;
     await BooksService.delete(bookId);
 

@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const basicAuth = require('express-basic-auth');
 
 const skillsRouter = require('./routes/skills.route');
 const introsRouter = require('./routes/intros.route');
@@ -15,8 +14,6 @@ connectDatabase();
 
 const app = express();
 
-const users = { users: { 'admin': 'admin' } };
-app.use(basicAuth(users));
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

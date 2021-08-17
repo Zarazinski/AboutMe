@@ -1,13 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const IntroService = require('../services/intros.service');
+const auth = require('../auth/basic.auth');
+
+const router = express.Router();
 
 router.get('/', async (req, res) => {
     const intros = await IntroService.getAll();
     res.send(intros);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const newIntro = req.body;
     const introCreated = await IntroService.create(newIntro);
     res.send(introCreated.toJSON());
@@ -23,7 +25,7 @@ router.get('/:introId', async (req, res, next) => {
     res.send(intro.toJSON());
 });
 
-router.put('/:introId', async (req, res) => {
+router.put('/:introId', auth, async (req, res) => {
     const intro = req.body;
     intro.id = req.params.introId;
     const introUpdated = await IntroService.update(intro);
@@ -31,7 +33,7 @@ router.put('/:introId', async (req, res) => {
     res.send(introUpdated.toJSON());
 });
 
-router.delete('/:introId', async (req, res) => {
+router.delete('/:introId', auth, async (req, res) => {
     const introId = req.params.introId;
     await IntroService.delete(introId);
 
