@@ -20,7 +20,7 @@ class ProjectsView extends Component {
     render() {
         return (
             <Fragment>
-                <Box my={2}>
+                <Box my={4}>
                     <Typography align="center" variant="h4" color="textSecondary">
                         My projects
                     </Typography>

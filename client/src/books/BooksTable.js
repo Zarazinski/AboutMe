@@ -19,13 +19,13 @@ class BooksTable extends Component {
     render() {
         return (
             <Fragment>
-                <Box my={2}>
+                <Box my={4}>
                     <Typography align="center" variant="h4" color="textSecondary">
                         My bookshelf
                     </Typography>
                 </Box>
 
-                <Paper elevation={0}>
+                <Paper elevation={0} variant="outlined">
                     <TableContainer>
                         <Table>
                             <TableHead>
