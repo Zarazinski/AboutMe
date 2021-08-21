@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const SkillModelSchema = new Schema({
     description: { type: String, required: true },
     level: { type: Number, required: true },
+    iconName: { type: String, required: false },
 }, {
     collections: 'skills'
 });

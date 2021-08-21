@@ -17,7 +17,7 @@ const icons = {
     javaScriptColor: { icon: JavaScriptColor, title: "JavaScript logo color" },
     javaScriptBlack: { icon: JavaScriptBlack, title: "JavaScript logo black" },
 
-    default: { icon: Gears, titel: "Generic skill logo" }
+    default: { icon: Gears, title: "Generic skill logo" }
 };
 
 class SkillIcon extends Component {

@@ -30,6 +30,11 @@ class SkillItem extends Component {
         };
     }
 
+    getSuffix() {
+        // Todo: Store the icons' colors property
+        return "Color";
+    }
+
     render() {
         let { description, level, iconName, classes } = this.state;
 
@@ -37,7 +42,7 @@ class SkillItem extends Component {
             <ListItem className={classes.root}>
                 <ListItemAvatar>
                     <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
-                        <SkillIcon name={iconName} width={32} height={32} />
+                        <SkillIcon name={iconName + this.getSuffix()} width={32} height={32} />
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={description} secondary={"Level: " + level} />
