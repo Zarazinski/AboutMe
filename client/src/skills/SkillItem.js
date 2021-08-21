@@ -40,7 +40,7 @@ class SkillItem extends Component {
                         <SkillIcon name={iconName} width={32} height={32} />
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText onClick={this.toggleEditMode} primary={description} secondary={"Level: " + level} />
+                <ListItemText primary={description} secondary={"Level: " + level} />
             </ListItem>
         );
     }
