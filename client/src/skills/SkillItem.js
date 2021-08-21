@@ -1,7 +1,9 @@
-import { Component } from "react";
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@material-ui/core";
+import { Component, Fragment } from "react";
+import { Avatar, Box, Collapse, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 import { SkillIcon } from "../assets/icons";
 import { withStyles } from '@material-ui/core/styles';
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import ProficiencyIndicator from "./progress/ProgressIndicator";
 
 const useStyles = theme => ({
     root: {
@@ -27,6 +29,7 @@ class SkillItem extends Component {
             level: props.data.level,
             iconName: props.data.iconName,
             classes: props.classes,
+            showMore: false,
         };
     }
 
@@ -35,18 +38,43 @@ class SkillItem extends Component {
         return "Color";
     }
 
+    onShowMoreClick() {
+        this.setState(prevState => ({
+            showMore: !prevState.showMore
+        }));
+    }
+
     render() {
-        let { description, level, iconName, classes } = this.state;
+        let { description, level, iconName, classes, showMore } = this.state;
 
         return (
-            <ListItem className={classes.root}>
-                <ListItemAvatar>
-                    <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
-                        <SkillIcon name={iconName + this.getSuffix()} width={32} height={32} />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={description} secondary={"Level: " + level} />
-            </ListItem>
+
+            <Fragment>
+                <ListItem alignItems="flex-start" button onClick={() => this.onShowMoreClick()} className={classes.root}>
+                    <ListItemAvatar>
+                        <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
+                            <SkillIcon name={iconName + this.getSuffix()} width={32} height={32} />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText disableTypography
+                        primary={
+                            <Typography color="textPrimary">
+                                {description}
+                            </Typography>
+                        }
+                        secondary={
+                            <Fragment>
+                                <ProficiencyIndicator level={level} length={5}/>
+                                <Box mt={1}/>
+                                <Collapse in={showMore} timeout="auto" unmountOnExit>
+                                    {/* TODO */}
+                                    {"Here is more information about this skill"}
+                                </Collapse>
+                            </Fragment>
+                        } />
+                    {showMore ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+            </Fragment>
         );
     }
 }

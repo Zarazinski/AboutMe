@@ -47,14 +47,14 @@ class Intro extends Component {
         return (
             <div style={{ padding: 20 }}>
                 <Grid container>
-                    <Grid item xs={4} className={classes.center}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.center}>
                         <Avatar
                             alt="It's me"
                             src="img/avatar.jpg"
                             className={classes.large}
                         />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} sm={6} md={8}>
                         <Typography variant="h2" color="textPrimary" gutterBottom>
                             About me
                         </Typography>
