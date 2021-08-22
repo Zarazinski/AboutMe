@@ -33,6 +33,7 @@ class SkillsList extends Component {
     componentDidMount() {
         SkillsAPI.getSkills()
             .then(response => response.json())
+            .then(skills => skills.sort((s1, s2) => s2.level - s1.level))
             .then(skills => this.setState({ skills: skills, showCount: Math.min(INITIAL_SHOW_COUNT, skills.length) }));
     }
 
