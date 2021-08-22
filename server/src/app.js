@@ -7,6 +7,7 @@ const skillsRouter = require('./routes/skills.route');
 const introsRouter = require('./routes/intros.route');
 const booksRouter = require('./routes/books.route');
 const projectsRouter = require('./routes/projects.route');
+const uploadsRouter = require('./routes/uploads.route');
 
 const { connectDatabase } = require('./data');
 
@@ -24,6 +25,7 @@ app.use('/skills', skillsRouter);
 app.use('/intros', introsRouter);
 app.use('/books', booksRouter);
 app.use('/projects', projectsRouter);
+app.use('/uploads', uploadsRouter);
 app.use(express.static('src/public'));
 
 module.exports = app;
