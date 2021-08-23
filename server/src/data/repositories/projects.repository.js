@@ -15,6 +15,7 @@ module.exports = class ProjectsRepository {
             description: project.description,
             link: project.link,
             technologies: project.technologies,
+            image: project.image,
         });
     }
 
