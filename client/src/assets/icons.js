@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import JavaColor from "./images/java-color.svg";
-import JavaBlack from "./images/java-black.svg";
-import PythonColor from "./images/python-color.svg";
-import PythonBlack from "./images/python-black.svg";
-import JavaScriptColor from "./images/javascript-color.svg";
-import JavaScriptBlack from "./images/javascript-black.svg";
+import JavaColor from "./images/skills/java-color.svg";
+import JavaBlack from "./images/skills/java-black.svg";
+import PythonColor from "./images/skills/python-color.svg";
+import PythonBlack from "./images/skills/python-black.svg";
+import JavaScriptColor from "./images/skills/javascript-color.svg";
+import JavaScriptBlack from "./images/skills/javascript-black.svg";
 
-import Gears from "./images/gears.svg";
+import Gears from "./images/skills/gears.svg";
 
 const icons = {
     javaColor: { icon: JavaColor, title: "Java logo color" },

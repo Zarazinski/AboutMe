@@ -3,6 +3,8 @@ import { CardHeader, Card, CardMedia, CardContent, CardActions, Grid, Button, Ty
 import { withStyles } from "@material-ui/core/styles";
 import * as ProjectsAPI from "./ProjectsAPI";
 
+import defaultProjectImage from "../assets/images/projects/default-project-image.jpeg";
+
 const useStyles = theme => ({
     media: {
         height: 0,
@@ -51,7 +53,7 @@ class ProjectsView extends Component {
                                 />
                                 <CardMedia
                                     className={classes.media}
-                                    image={project.image}
+                                    image={project.image || defaultProjectImage}
                                     title={project.name}
                                 />
                                 <CardContent>
