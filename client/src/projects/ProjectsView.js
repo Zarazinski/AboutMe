@@ -1,6 +1,8 @@
 import { Component, Fragment } from "react";
-import { CardHeader, Card, CardMedia, CardContent, CardActions, Grid, Button, Typography, Box } from "@material-ui/core";
+import { CardHeader, Card, CardMedia, CardContent, CardActions, Grid, Button, Typography, Box, IconButton, Tooltip } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import AddIcon from '@material-ui/icons/Add';
+
 import * as ProjectsAPI from "./ProjectsAPI";
 
 import defaultProjectImage from "../assets/images/projects/default-project-image.jpeg";
@@ -14,7 +16,13 @@ const useStyles = theme => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+    },
+    bottom: {
+        flexGrow: 1
+    },
+    heightEqualToWidth: {
+        paddingTop: '45%',
+        paddingBottom: '45%'
     }
 });
 
@@ -43,9 +51,9 @@ class ProjectsView extends Component {
                         My projects
                     </Typography>
                 </Box>
-                <Grid container spacing={4}>
+                <Grid container spacing={4} direction={"row"}>
                     {this.state.projects.map(project => (
-                        <Grid item key={project.id} xs={12} sm={6} md={6}>
+                        <Grid item key={project.id} xs={12} sm={6} md={4}>
                             <Card className={classes.equalCard}>
                                 <CardHeader
                                     title={project.name}
@@ -59,12 +67,24 @@ class ProjectsView extends Component {
                                 <CardContent>
                                     {project.description}
                                 </CardContent>
+
+                                {/* This div makes the CardActions to stick to the bottom - found here https://stackoverflow.com/a/68387465 */}
+                                <div className={classes.bottom} />
                                 <CardActions>
                                     <Button size="small" color="primary" aria-label="Open on GitHub" onClick={() => window.open(project.link, "_blank")}>Github</Button>
                                 </CardActions>
                             </Card>
                         </Grid>
                     ))}
+                    <Grid item key='add-project' xs={12} sm={6} md={4}>
+                        <Box border={"4px dashed"} borderRadius={3} borderColor={'#e0e0e0'} justifyContent="center" alignItems="center" className={`${classes.equalCard} ${classes.heightEqualToWidth}`}>
+                            <Tooltip title="Add a new project">
+                                <IconButton>
+                                    <AddIcon fontSize="large" />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+                    </Grid>
                 </Grid>
             </Fragment>
         );
