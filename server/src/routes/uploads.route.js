@@ -20,7 +20,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 4 * 1024 * 1024 }
+    limits: {
+        files: 1,
+        fileSize: 4 * 1024 * 1024,
+    }
 });
 
 router.post('/avatar', auth, upload.single('avatar'), (req, res) => {
@@ -28,7 +31,7 @@ router.post('/avatar', auth, upload.single('avatar'), (req, res) => {
 
     return res.send({
         filename: req.file.filename,
-        path: path.join('avatar', req.file.filename)
+        path: path.join('images', 'avatar', req.file.filename)
     });
 });
 
@@ -37,7 +40,7 @@ router.post('/project', auth, upload.single('project'), (req, res) => {
 
     return res.send({
         filename: req.file.filename,
-        path: path.join('project', req.file.filename)
+        path: path.join('images', 'project', req.file.filename)
     });
 });
 

@@ -2,6 +2,8 @@ import { Component, Fragment } from "react";
 import { Box, Tooltip, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, withStyles } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 
+import * as ProjectsAPI from "./ProjectsAPI";
+
 const useStyles = theme => ({
     input: {
         display: 'none'
@@ -14,6 +16,7 @@ class AddProjectBox extends Component {
         this.state = {
             dialogOpen: false,
             classes: props.classes,
+            projectImage: null
         };
     }
 
@@ -29,9 +32,21 @@ class AddProjectBox extends Component {
         });
     }
 
+    uploadProjectImage(e) {
+        e.preventDefault();
+        const image = e.target.files[0];
+
+        ProjectsAPI.uploadProjectImage(image)
+            .then(response => response.json())
+            .then(imageInfo => this.setState({
+                projectImage: imageInfo.path
+            }));
+    }
+
     render() {
         let { className } = this.props;
-        let { dialogOpen, classes } = this.state;
+        let { dialogOpen, classes, projectImage } = this.state;
+
         return (
             <Fragment>
                 <Box border={"4px dashed"} borderRadius={3} borderColor={'#e0e0e0'} justifyContent="center" alignItems="center" className={className}>
@@ -49,14 +64,15 @@ class AddProjectBox extends Component {
                             accept="image/*"
                             type="file"
                             name="project"
-                            onChange=""
+                            onChange={(e) => this.uploadProjectImage(e)}
                             className={classes.input} />
-                            <label htmlFor="add-project-image">
-                                <Button variant="contained" color="primary" component="span">
-                                    Select image
-                                </Button>
-                            </label>
+                        <label htmlFor="add-project-image">
+                            <Button variant="contained" color="primary" component="span">
+                                Select image
+                            </Button>
+                        </label>
                         <DialogContentText>
+                            {projectImage && <img alt='' src={projectImage}/>}
                             {/* Add */}
                         </DialogContentText>
                         <TextField />
