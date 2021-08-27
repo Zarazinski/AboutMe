@@ -1,5 +1,6 @@
 import { Component, Fragment } from "react";
 import { Box, Tooltip, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, withStyles } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import AddIcon from '@material-ui/icons/Add';
 
 import * as ProjectsAPI from "./ProjectsAPI";
@@ -7,7 +8,13 @@ import * as ProjectsAPI from "./ProjectsAPI";
 const useStyles = theme => ({
     input: {
         display: 'none'
-    }
+    },
+    dialog: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+        width: '100%'
+    },
 });
 
 class AddProjectBox extends Component {
@@ -46,6 +53,7 @@ class AddProjectBox extends Component {
     render() {
         let { className } = this.props;
         let { dialogOpen, classes, projectImage } = this.state;
+        let options = ["Java", "Kotlin", "JavaScript", "Python"];
 
         return (
             <Fragment>
@@ -56,26 +64,63 @@ class AddProjectBox extends Component {
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <Dialog open={dialogOpen} onClose={() => this.closeDialog()} aria-labelledby="add-project-dialog-title">
+                <Dialog
+                    open={dialogOpen}
+                    onClose={() => this.closeDialog()}
+                    aria-labelledby="add-project-dialog-title"
+                    fullWidth
+                    maxWidth="xs"
+                >
                     <DialogTitle id="add-project-dialog-title">Add a new project</DialogTitle>
-                    <DialogContent>
+                    <DialogContent className={classes.dialog}>
+                        <DialogContentText>
+
+                            {projectImage && <img alt='' src={projectImage} />}
+                            {/* Add */}
+                        </DialogContentText>
+
+                        <Autocomplete
+                            id="add-technologies"
+                            multiple
+                            freeSolo
+                            options={options}
+                            getOptionLabel={(option) => option}
+                            renderInput={(params) => <TextField
+                                label="Technologies"
+                                variant="outlined"
+                                margin="normal"
+                                {...params}
+                            />}
+                        />
+
                         <input
                             id="add-project-image"
                             accept="image/*"
                             type="file"
                             name="project"
                             onChange={(e) => this.uploadProjectImage(e)}
-                            className={classes.input} />
+                            className={classes.input}
+                        />
                         <label htmlFor="add-project-image">
-                            <Button variant="contained" color="primary" component="span">
+                            <Button variant="contained" color="primary" size="small" component="span">
                                 Select image
                             </Button>
                         </label>
-                        <DialogContentText>
-                            {projectImage && <img alt='' src={projectImage}/>}
-                            {/* Add */}
-                        </DialogContentText>
-                        <TextField />
+
+                        <TextField
+                            id="project-name"
+                            label="Name"
+                            variant="outlined"
+                            margin="normal"
+                        />
+                        <TextField
+                            id="project-description"
+                            label="Description"
+                            multiline
+                            rows={4}
+                            variant="outlined"
+                            margin="normal"
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => this.closeDialog()} color="secondary">Cancel</Button>
