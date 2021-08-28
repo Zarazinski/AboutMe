@@ -1,7 +1,8 @@
 import { Component, Fragment } from "react";
-import { Box, Tooltip, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, withStyles } from "@material-ui/core";
+import { Box, Tooltip, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, withStyles } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import AddIcon from '@material-ui/icons/Add';
+import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
 
 import * as ProjectsAPI from "./ProjectsAPI";
 
@@ -15,6 +16,14 @@ const useStyles = theme => ({
         margin: 'auto',
         width: '100%'
     },
+    addPhotoBox: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    media: {
+        width: '100%',
+        paddingTop: '56.25%'
+    }
 });
 
 class AddProjectBox extends Component {
@@ -22,8 +31,7 @@ class AddProjectBox extends Component {
         super(props);
         this.state = {
             dialogOpen: false,
-            classes: props.classes,
-            projectImage: null
+            classes: props.classes
         };
     }
 
@@ -35,7 +43,9 @@ class AddProjectBox extends Component {
 
     closeDialog() {
         this.setState({
-            dialogOpen: false
+            dialogOpen: false,
+            projectImagePath: null,
+            projectImageName: null
         });
     }
 
@@ -46,13 +56,14 @@ class AddProjectBox extends Component {
         ProjectsAPI.uploadProjectImage(image)
             .then(response => response.json())
             .then(imageInfo => this.setState({
-                projectImage: imageInfo.path
+                projectImagePath: imageInfo.path,
+                projectImageName: imageInfo.filename
             }));
     }
 
     render() {
         let { className } = this.props;
-        let { dialogOpen, classes, projectImage } = this.state;
+        let { dialogOpen, classes, projectImagePath, projectImageName } = this.state;
         let options = ["Java", "Kotlin", "JavaScript", "Python"];
 
         return (
@@ -73,11 +84,12 @@ class AddProjectBox extends Component {
                 >
                     <DialogTitle id="add-project-dialog-title">Add a new project</DialogTitle>
                     <DialogContent className={classes.dialog}>
-                        <DialogContentText>
-
-                            {projectImage && <img alt='' src={projectImage} />}
-                            {/* Add */}
-                        </DialogContentText>
+                        <TextField
+                            id="project-name"
+                            label="Name"
+                            variant="outlined"
+                            margin="normal"
+                        />
 
                         <Autocomplete
                             id="add-technologies"
@@ -93,26 +105,30 @@ class AddProjectBox extends Component {
                             />}
                         />
 
-                        <input
-                            id="add-project-image"
-                            accept="image/*"
-                            type="file"
-                            name="project"
-                            onChange={(e) => this.uploadProjectImage(e)}
-                            className={classes.input}
-                        />
-                        <label htmlFor="add-project-image">
-                            <Button variant="contained" color="primary" size="small" component="span">
-                                Select image
-                            </Button>
-                        </label>
+                        {projectImagePath ?
+                            <CardMedia
+                                className={classes.media}
+                                image={projectImagePath}
+                                title={projectImageName}
+                            />
+                            :
+                            <Box border={"4px dashed"} borderRadius={3} borderColor={'#e0e0e0'} justifyContent="center" alignItems="center" className={classes.addPhotoBox}>
+                                <input
+                                    id="add-project-image"
+                                    accept="image/*"
+                                    type="file"
+                                    name="project"
+                                    onChange={(e) => this.uploadProjectImage(e)}
+                                    className={classes.input}
+                                />
+                                <label htmlFor="add-project-image">
+                                    <IconButton component="span">
+                                        <AddAPhotoOutlinedIcon size="large" />
+                                    </IconButton>
+                                </label>
+                            </Box>
+                        }
 
-                        <TextField
-                            id="project-name"
-                            label="Name"
-                            variant="outlined"
-                            margin="normal"
-                        />
                         <TextField
                             id="project-description"
                             label="Description"
