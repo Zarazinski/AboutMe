@@ -112,7 +112,16 @@ class AddProjectBox extends Component {
                                 title={projectImageName}
                             />
                             :
-                            <Box border={"4px dashed"} borderRadius={3} borderColor={'#e0e0e0'} justifyContent="center" alignItems="center" className={classes.addPhotoBox}>
+                            <Box
+                                border={"2px dashed"}
+                                mt={2}
+                                mb={1}
+                                borderRadius={3}
+                                borderColor={'#e0e0e0'}
+                                justifyContent="center"
+                                alignItems="center"
+                                className={classes.addPhotoBox}
+                            >
                                 <input
                                     id="add-project-image"
                                     accept="image/*"
@@ -123,7 +132,7 @@ class AddProjectBox extends Component {
                                 />
                                 <label htmlFor="add-project-image">
                                     <IconButton component="span">
-                                        <AddAPhotoOutlinedIcon size="large" />
+                                        <AddAPhotoOutlinedIcon fontSize="large" />
                                     </IconButton>
                                 </label>
                             </Box>
@@ -140,6 +149,7 @@ class AddProjectBox extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => this.closeDialog()} color="secondary">Cancel</Button>
+                        <div style={{ flex: '1 0 0' }} />
                         <Button onClick={() => this.closeDialog()} color="primary">Create</Button>
                     </DialogActions>
                 </Dialog>
