@@ -31,6 +31,7 @@ class AddProjectBox extends Component {
         super(props);
         this.state = {
             dialogOpen: false,
+            projectData: {},
             classes: props.classes
         };
     }
@@ -44,8 +45,17 @@ class AddProjectBox extends Component {
     closeDialog() {
         this.setState({
             dialogOpen: false,
-            projectImagePath: null,
-            projectImageName: null
+            projectData: {}
+        });
+    }
+
+    handleProjectDataChange(field, value) {
+        this.setState(prevState => {
+            const projectData = { ...prevState.projectData };
+            projectData[field] = value;
+            return {
+                projectData: projectData
+            };
         });
     }
 
@@ -55,15 +65,27 @@ class AddProjectBox extends Component {
 
         ProjectsAPI.uploadProjectImage(image)
             .then(response => response.json())
-            .then(imageInfo => this.setState({
-                projectImagePath: imageInfo.path,
-                projectImageName: imageInfo.filename
-            }));
+            .then(imageInfo => this.setState(prevState => ({
+                projectData: {
+                    ...prevState.projectData,
+                    image: imageInfo.path,
+                }
+            })));
+    }
+
+    handleCreateProject() {
+        // TODO: add validation and response handling
+        ProjectsAPI.createProject(this.state.projectData)
+            .then(response => response.json())
+            .then(newProject => {
+                console.log(newProject);
+                this.closeDialog();
+            });
     }
 
     render() {
         let { className } = this.props;
-        let { dialogOpen, classes, projectImagePath, projectImageName } = this.state;
+        let { dialogOpen, classes, projectData } = this.state;
         let options = ["Java", "Kotlin", "JavaScript", "Python"];
 
         return (
@@ -89,12 +111,14 @@ class AddProjectBox extends Component {
                             label="Name"
                             variant="outlined"
                             margin="normal"
+                            onChange={e => this.handleProjectDataChange('name', e.target.value)}
                         />
 
                         <Autocomplete
                             id="add-technologies"
                             multiple
                             freeSolo
+                            onChange={(event, value) => this.handleProjectDataChange('technologies', value)}
                             options={options}
                             getOptionLabel={(option) => option}
                             renderInput={(params) => <TextField
@@ -105,11 +129,10 @@ class AddProjectBox extends Component {
                             />}
                         />
 
-                        {projectImagePath ?
+                        {projectData.image ?
                             <CardMedia
                                 className={classes.media}
-                                image={projectImagePath}
-                                title={projectImageName}
+                                image={projectData.image}
                             />
                             :
                             <Box
@@ -145,12 +168,13 @@ class AddProjectBox extends Component {
                             rows={4}
                             variant="outlined"
                             margin="normal"
+                            onChange={e => this.handleProjectDataChange('description', e.target.value)}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => this.closeDialog()} color="secondary">Cancel</Button>
                         <div style={{ flex: '1 0 0' }} />
-                        <Button onClick={() => this.closeDialog()} color="primary">Create</Button>
+                        <Button onClick={() => this.handleCreateProject()} color="primary">Create</Button>
                     </DialogActions>
                 </Dialog>
             </Fragment>);

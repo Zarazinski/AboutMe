@@ -16,3 +16,20 @@ export const uploadProjectImage = async (image) => {
 
     return response;
 };
+
+export const createProject = async (project) => {
+    const newProject = {
+        name: project.name,
+        description: project.description,
+        technologies: project.technologies,
+        image: project.image,
+    };
+
+    const response = await fetch(API_URL + '/projects', {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'post',
+        body: JSON.stringify(newProject),
+    });
+
+    return response;
+};
