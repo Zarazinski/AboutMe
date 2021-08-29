@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ProjectModelSchema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    link: { type: String, required: true },
+    link: { type: String, required: false },
     image: { type: String, required: false },
     technologies: [{ type: String }],
 }, {
