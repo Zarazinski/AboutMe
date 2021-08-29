@@ -1,6 +1,7 @@
 import { Component, Fragment } from "react";
 import { Box, Tooltip, IconButton, CardMedia, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, withStyles } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Alert from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
 
@@ -46,7 +47,8 @@ class AddProjectBox extends Component {
     closeDialog() {
         this.setState({
             dialogOpen: false,
-            projectData: {}
+            projectData: {},
+            errorMessage: null,
         });
     }
 
@@ -55,7 +57,8 @@ class AddProjectBox extends Component {
             const projectData = { ...prevState.projectData };
             projectData[field] = value;
             return {
-                projectData: projectData
+                projectData: projectData,
+                errorMessage: null,
             };
         });
     }
@@ -65,28 +68,55 @@ class AddProjectBox extends Component {
         const image = e.target.files[0];
 
         ProjectsAPI.uploadProjectImage(image)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    let err = new Error(response.statusText);
+                    err.response = response;
+                    throw err;
+                }
+                return response.json();
+            })
             .then(imageInfo => this.setState(prevState => ({
                 projectData: {
                     ...prevState.projectData,
                     image: imageInfo.path,
                 }
-            })));
+            })))
+            .catch(error => error.response
+                .text()
+                .then(text => this.showErrorMessage(`${error.message}: ${text}`))
+            );
     }
 
     handleCreateProject() {
-        // TODO: add validation and response handling
         ProjectsAPI.createProject(this.state.projectData)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    let err = new Error(response.statusText);
+                    err.response = response;
+                    throw err;
+                }
+                return response.json();
+            })
             .then(project => {
                 this.closeDialog();
                 this.state.onNewProjectCreated(project);
-            });
+            })
+            .catch(error => error.response
+                .text()
+                .then(text => this.showErrorMessage(`${error.message}: ${text}`))
+            );
+    }
+
+    showErrorMessage(message) {
+        this.setState({
+            errorMessage: message
+        });
     }
 
     render() {
         let { className } = this.props;
-        let { dialogOpen, classes, projectData } = this.state;
+        let { dialogOpen, classes, projectData, errorMessage } = this.state;
         let options = ["Java", "Kotlin", "JavaScript", "Python"];
 
         return (
@@ -107,6 +137,7 @@ class AddProjectBox extends Component {
                 >
                     <DialogTitle id="add-project-dialog-title">Add a new project</DialogTitle>
                     <DialogContent className={classes.dialog}>
+                        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                         <TextField
                             id="project-name"
                             label="Name"
