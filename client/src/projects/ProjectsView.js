@@ -30,6 +30,16 @@ class ProjectsView extends Component {
     }
 
     componentDidMount() {
+        this.fetchProjects();
+    }
+
+    onNewProjectCreated(project) {
+        this.setState(prevState => ({
+            projects: [...prevState.projects, project]
+        }));
+    }
+
+    fetchProjects() {
         ProjectsAPI.getProjects()
             .then(response => response.json())
             .then(projects => this.setState({ projects: projects }));
@@ -58,7 +68,7 @@ class ProjectsView extends Component {
                         </Grid>
                     ))}
                     <Grid item key='add-project' xs={12} sm={6} md={6}>
-                        <AddProjectBox className={`${classes.equalCard} ${classes.heightEqualToWidth}`} />
+                        <AddProjectBox onNewProjectCreated={project => this.onNewProjectCreated(project)} className={`${classes.equalCard} ${classes.heightEqualToWidth}`} />
                     </Grid>
                 </Grid>
             </Fragment>

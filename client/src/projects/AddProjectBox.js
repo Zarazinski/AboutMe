@@ -32,7 +32,8 @@ class AddProjectBox extends Component {
         this.state = {
             dialogOpen: false,
             projectData: {},
-            classes: props.classes
+            classes: props.classes,
+            onNewProjectCreated: props.onNewProjectCreated
         };
     }
 
@@ -77,9 +78,9 @@ class AddProjectBox extends Component {
         // TODO: add validation and response handling
         ProjectsAPI.createProject(this.state.projectData)
             .then(response => response.json())
-            .then(newProject => {
-                console.log(newProject);
+            .then(project => {
                 this.closeDialog();
+                this.state.onNewProjectCreated(project);
             });
     }
 
