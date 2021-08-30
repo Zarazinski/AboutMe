@@ -1,7 +1,9 @@
-import { Component } from "react";
-import { Button, Card, IconButton, CardContent, CardMedia, CardHeader, CardActions } from "@material-ui/core";
+import { Component, Fragment } from "react";
+import { Button, Card, IconButton, CardContent, CardMedia, CardHeader, CardActions, Menu, MenuItem } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
 import { withStyles } from "@material-ui/styles";
+
+import { deleteProject } from "./ProjectsAPI";
 
 import defaultProjectImage from "../assets/images/projects/default-project-image.jpeg";
 
@@ -25,13 +27,46 @@ class Project extends Component {
             technologies: props.technologies,
             link: props.link,
             image: props.image,
+            onProjectDeleted: props.onProjectDeleted,
+            menuOpen: false,
             className: props.className,
             classes: props.classes,
         };
     }
 
+    handleOpenMenuClick(anchorEl) {
+        this.setState({
+            anchorEl: anchorEl,
+        });
+    }
+
+    handleCloseMenuClick() {
+        this.setState({
+            anchorEl: null
+        });
+    }
+
+    handleDeleteProjectClick() {
+        const id = this.state.id;
+        deleteProject(id)
+            .then(response => {
+                if (response.ok) {
+                    this.state.onProjectDeleted(id);
+                }
+            })
+            .catch(e => console.log(e.message));
+
+        this.handleCloseMenuClick();
+    }
+
+    handleEditProjectClick() {
+        // Not implemented
+        this.handleCloseMenuClick();
+    }
+
     render() {
-        let { name, technologies, link, image, description, className, classes } = this.state;
+        let { name, technologies, link, image, description, anchorEl, className, classes } = this.state;
+        let menuOpen = Boolean(anchorEl);
 
         return (
             <Card className={className}>
@@ -39,10 +74,22 @@ class Project extends Component {
                     title={name}
                     subheader={technologies.join(", ")}
                     action={
-                        <IconButton aria-label="settings">
-                            <MoreVert />
-                            {/* TODO: Show menu for remove/edit */}
-                        </IconButton>
+                        <Fragment>
+                            <IconButton aria-label="settings" aria-controls="project-menu" aria-haspopup="true" onClick={(e) => this.handleOpenMenuClick(e.currentTarget)}>
+                                <MoreVert />
+                            </IconButton>
+                            <Menu
+                                id="project-menu"
+                                anchorEl={anchorEl}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                keepMounted
+                                open={menuOpen}
+                                onClose={() => this.handleCloseMenuClick()}
+                            >
+                                <MenuItem disabled onClick={() => this.handleEditProjectClick()}>Edit</MenuItem>
+                                <MenuItem onClick={() => this.handleDeleteProjectClick()}>Delete</MenuItem>
+                            </Menu>
+                        </Fragment>
                     }
                 />
                 <CardMedia

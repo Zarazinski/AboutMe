@@ -33,3 +33,11 @@ export const createProject = async (project) => {
 
     return response;
 };
+
+export const deleteProject = async (projectId) => {
+    const response = await fetch(API_URL + '/projects/' + projectId, {
+        method: 'delete'
+    });
+
+    return response;
+}

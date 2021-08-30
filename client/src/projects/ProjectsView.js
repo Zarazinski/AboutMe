@@ -45,6 +45,12 @@ class ProjectsView extends Component {
             .then(projects => this.setState({ projects: projects }));
     }
 
+    onProjectDeleted(projectId) {
+        this.setState(prevState => ({
+            projects: prevState.projects.filter(p => p.id !== projectId)
+        }));
+    }
+
     render() {
         const classes = this.state.classes;
         return (
@@ -58,12 +64,14 @@ class ProjectsView extends Component {
                     {this.state.projects.map(project => (
                         <Grid item key={project.id} xs={12} sm={6} md={6}>
                             <Project
+                                id={project.id}
                                 name={project.name}
                                 description={project.description}
                                 image={project.image}
                                 link={project.link}
                                 technologies={project.technologies}
                                 className={classes.equalCard}
+                                onProjectDeleted={(id) => this.onProjectDeleted(id)}
                             />
                         </Grid>
                     ))}
