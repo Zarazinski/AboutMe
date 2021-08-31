@@ -23,6 +23,7 @@ export const createProject = async (project) => {
         description: project.description,
         technologies: project.technologies,
         image: project.image,
+        link: project.link,
     };
 
     const response = await fetch(API_URL + '/projects', {

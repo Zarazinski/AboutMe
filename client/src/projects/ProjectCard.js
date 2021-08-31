@@ -104,7 +104,7 @@ class Project extends Component {
                 {/* This div makes the CardActions to stick to the bottom - found here https://stackoverflow.com/a/68387465 */}
                 <div className={classes.bottom} />
                 <CardActions>
-                    <Button size="small" color="primary" aria-label="Open on GitHub" onClick={() => window.open(link, "_blank")}>Github</Button>
+                    <Button disabled={!link} size="small" color="primary" aria-label="Show the repository" onClick={() => window.open(link, "_blank")}>Show more</Button>
                 </CardActions>
             </Card>
         );
