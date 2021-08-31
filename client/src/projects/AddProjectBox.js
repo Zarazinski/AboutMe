@@ -153,6 +153,14 @@ class AddProjectBox extends Component {
                             onChange={(event, value) => this.handleProjectDataChange('technologies', value)}
                             options={options}
                             getOptionLabel={(option) => option}
+                            autoSelect
+                            onInputChange={(event, newInputValue) => {
+                                if (newInputValue.endsWith(',')) {
+                                    console.log(newInputValue);
+                                    event.target.blur();
+                                    event.target.focus();
+                                }
+                            }}
                             renderInput={(params) => <TextField
                                 label="Technologies"
                                 variant="outlined"
@@ -201,6 +209,14 @@ class AddProjectBox extends Component {
                             variant="outlined"
                             margin="normal"
                             onChange={e => this.handleProjectDataChange('description', e.target.value)}
+                        />
+                        <TextField
+                            id="project-link"
+                            label="Repository link"
+                            rows={1}
+                            variant="outlined"
+                            margin="normal"
+                            onChange={e => this.handleProjectDataChange('link', e.target.value)}
                         />
                     </DialogContent>
                     <DialogActions>
