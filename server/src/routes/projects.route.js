@@ -13,6 +13,15 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/technologies', async (req, res) => {
+    try {
+        const technologiesList = await ProjectsService.getTechnologies();
+        res.send({ "technologies": technologiesList });
+    } catch (e) {
+        res.status(400).send(e.message);
+    }
+});
+
 router.get('/:projectId', async (req, res) => {
     const projectId = req.params.projectId;
     try {

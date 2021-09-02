@@ -41,4 +41,10 @@ export const deleteProject = async (projectId) => {
     });
 
     return response;
-}
+};
+
+export const getTechnologies = async () => {
+    const response = await fetch(API_URL + '/projects/technologies');
+
+    return response;
+};

@@ -58,4 +58,11 @@ module.exports = class ProjectsService {
             throw new Error("List of technologies cannot be empty");
         }
     }
+
+    static async getTechnologies() {
+        const allTechnologies = await ProjectsRepository.getAll();
+        const uniqueTechnologies = new Set(allTechnologies.flatMap(project => project.technologies));
+
+        return [...uniqueTechnologies];
+    }
 }

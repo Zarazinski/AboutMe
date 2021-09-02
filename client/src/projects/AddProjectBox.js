@@ -33,9 +33,18 @@ class AddProjectBox extends Component {
         this.state = {
             dialogOpen: false,
             projectData: {},
+            technologiesSuggestions: [],
             classes: props.classes,
             onNewProjectCreated: props.onNewProjectCreated
         };
+    }
+
+    componentDidMount() {
+        ProjectsAPI.getTechnologies()
+            .then(response => response.json())
+            .then(responseJson => this.setState({
+                technologiesSuggestions: responseJson["technologies"]
+            }));
     }
 
     openDialog() {
@@ -116,8 +125,7 @@ class AddProjectBox extends Component {
 
     render() {
         let { className } = this.props;
-        let { dialogOpen, classes, projectData, errorMessage } = this.state;
-        let options = ["Java", "Kotlin", "JavaScript", "Python"];
+        let { dialogOpen, classes, projectData, errorMessage, technologiesSuggestions } = this.state;
 
         return (
             <Fragment>
@@ -151,7 +159,7 @@ class AddProjectBox extends Component {
                             multiple
                             freeSolo
                             onChange={(event, value) => this.handleProjectDataChange('technologies', value)}
-                            options={options}
+                            options={technologiesSuggestions}
                             getOptionLabel={(option) => option}
                             autoSelect
                             onInputChange={(event, newInputValue) => {
