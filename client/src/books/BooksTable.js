@@ -40,7 +40,7 @@ class BooksTable extends Component {
                                     <TableRow key={book.id}>
                                         <TableCell>{book.title}</TableCell>
                                         <TableCell align="right">{book.authors}</TableCell>
-                                        <TableCell align="right">{book.readDate}</TableCell>
+                                        <TableCell align="right">{new Date(book.readDate).toLocaleDateString()}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
