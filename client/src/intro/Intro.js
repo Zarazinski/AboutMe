@@ -1,6 +1,7 @@
 import { Component } from "react";
-import { Avatar, Typography, Grid } from "@material-ui/core";
+import { Avatar, Badge, Typography, Grid, IconButton } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
+import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
 
 import * as IntrosAPI from "./IntroAPI";
 
@@ -21,6 +22,9 @@ const useStyles = theme => ({
         width: theme.spacing(20),
         height: theme.spacing(20),
     },
+    input: {
+        display: 'none',
+    }
 });
 
 class Intro extends Component {
@@ -44,15 +48,32 @@ class Intro extends Component {
 
     render() {
         const classes = this.state.classes;
+        const addPhotoForm = <div>
+            <input
+                id="add-avatar-image"
+                accept="image/*"
+                type="file"
+                name="project"
+                onChange={(e) => this.uploadNewAvatar(e)}
+                className={classes.input} />
+            <label htmlFor="add-project-image">
+                <IconButton component="span">
+                    <AddAPhotoOutlinedIcon fontSize="medium" />
+                </IconButton>
+            </label>
+        </div>;
+
         return (
             <div style={{ padding: 20 }}>
                 <Grid container>
                     <Grid item xs={12} sm={6} md={4} className={classes.center}>
-                        <Avatar
-                            alt="It's me"
-                            src="img/avatar.jpg"
-                            className={classes.large}
-                        />
+                        <Badge badgeContent={addPhotoForm}>
+                            <Avatar
+                                alt="It's me"
+                                src="img/avatar.jpg"
+                                className={classes.large}
+                            />
+                        </Badge>
                     </Grid>
                     <Grid item xs={12} sm={6} md={8}>
                         <Typography variant="h2" color="textPrimary" gutterBottom>
