@@ -53,10 +53,10 @@ class Intro extends Component {
                 id="add-avatar-image"
                 accept="image/*"
                 type="file"
-                name="project"
+                name="avatar"
                 onChange={(e) => this.uploadNewAvatar(e)}
                 className={classes.input} />
-            <label htmlFor="add-project-image">
+            <label htmlFor="add-avatar-image">
                 <IconButton component="span">
                     <AddAPhotoOutlinedIcon fontSize="medium" />
                 </IconButton>
