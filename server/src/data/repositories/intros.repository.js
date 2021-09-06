@@ -13,7 +13,8 @@ module.exports = class IntrosRepository {
     static async add(intro) {
         return await IntroModel.create({
             description: intro.description,
-            active: intro.active
+            active: intro.active,
+            avatar: intro.avatar,
         });
     }
 
@@ -22,6 +23,6 @@ module.exports = class IntrosRepository {
     }
 
     static async update(intro) {
-        return await IntroModel.findByIdAndUpdate(intro.id, intro);
+        return await IntroModel.findByIdAndUpdate(intro.id, intro, { new: true });
     }
 };

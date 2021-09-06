@@ -32,7 +32,7 @@ class Intro extends Component {
         super(props);
         this.state = {
             intros: [],
-            activeIntro: "",
+            activeIntro: {},
             classes: props.classes
         };
     }
@@ -46,6 +46,26 @@ class Intro extends Component {
             }));
     }
 
+    updateIntro(newIntro) {
+        IntrosAPI.updateIntro(newIntro)
+            .then(response => response.json())
+            .then(updatedIntro => this.setState(prevState => ({
+                intros: [updatedIntro, ...prevState.intros.filter(intro => intro.id !== updatedIntro.id)],
+                activeIntro: updatedIntro,
+            })));
+    }
+
+    uploadNewAvatar(avatarFile) {
+        IntrosAPI.uploadAvatarImage(avatarFile)
+            .then(response => response.json())
+            .then(imageData => {
+                const currentActiveIntro = this.state.activeIntro;
+                currentActiveIntro.avatar = imageData.path;
+
+                this.updateIntro(currentActiveIntro);
+            });
+    }
+
     render() {
         const classes = this.state.classes;
         const addPhotoForm = <div>
@@ -54,7 +74,11 @@ class Intro extends Component {
                 accept="image/*"
                 type="file"
                 name="avatar"
-                onChange={(e) => this.uploadNewAvatar(e)}
+                onChange={(e) => {
+                    e.preventDefault();
+                    const image = e.target.files[0];
+                    this.uploadNewAvatar(image);
+                }}
                 className={classes.input} />
             <label htmlFor="add-avatar-image">
                 <IconButton component="span">
@@ -63,6 +87,8 @@ class Intro extends Component {
             </label>
         </div>;
 
+        let { activeIntro } = this.state;
+
         return (
             <div style={{ padding: 20 }}>
                 <Grid container>
@@ -70,7 +96,7 @@ class Intro extends Component {
                         <Badge badgeContent={addPhotoForm}>
                             <Avatar
                                 alt="It's me"
-                                src="img/avatar.jpg"
+                                src={activeIntro.avatar}
                                 className={classes.large}
                             />
                         </Badge>
@@ -80,7 +106,7 @@ class Intro extends Component {
                             About me
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary" paragraph>
-                            {this.state.activeIntro.description}
+                            {activeIntro.description}
                         </Typography>
                     </Grid>
                 </Grid>

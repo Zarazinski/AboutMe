@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const IntroModelSchema = new Schema({
     description: { type: String, required: true },
     active: { type: Boolean, required: true },
+    avatar: { type: String, required: false },
 }, {
     collections: 'intros'
 });
