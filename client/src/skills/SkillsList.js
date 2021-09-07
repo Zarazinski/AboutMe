@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { List, Typography, Paper, Box, Divider, Button } from "@material-ui/core";
 
+import AddSkillItemBox from "./AddSkillItemBox";
 import * as SkillsAPI from "./SkillsAPI";
 import SkillItem from "./SkillItem";
 
@@ -51,6 +52,8 @@ class SkillsList extends Component {
                 <Paper elevation={0} variant="outlined">
                     <List>
                         {skills.slice(0, showCount).map(skill => <SkillItem key={skill.id} data={skill} />)}
+                        <Divider />
+                        <AddSkillItemBox />
                     </List>
                     <Divider />
                     {skills.length > INITIAL_SHOW_COUNT &&

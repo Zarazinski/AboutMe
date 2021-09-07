@@ -28,4 +28,4 @@ class SkillIcon extends Component {
     }
 };
 
-export { SkillIcon };
+export { SkillIcon, icons };
