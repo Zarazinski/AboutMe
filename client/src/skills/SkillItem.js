@@ -3,7 +3,7 @@ import { Avatar, Box, Collapse, ListItem, ListItemAvatar, ListItemText, Typograp
 import { SkillIcon } from "../assets/icons";
 import { withStyles } from '@material-ui/core/styles';
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import ProficiencyIndicator from "./progress/ProgressIndicator";
+import ProficiencyIndicator from "./progress/ProficiencyIndicator";
 
 const useStyles = theme => ({
     root: {

@@ -1,8 +1,10 @@
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent, TextField, withStyles } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, TextField, withStyles, Typography, Box } from "@material-ui/core";
+import { FormControl, FormLabel, FormGroup } from "@material-ui/core";
 import { Component, Fragment } from "react";
 import Alert from '@material-ui/lab/Alert';
 
 import * as SkillsAPI from "./SkillsAPI.js";
+import ProficiencyIndicator from "./progress/ProficiencyIndicator.js";
 
 const useStyles = theme => ({
     dialog: {
@@ -11,6 +13,12 @@ const useStyles = theme => ({
         margin: 'auto',
         width: '100%'
     },
+    fieldset: {
+        width: '100%',
+        padding: 10,
+        border: '1px solid #c4c4c4',
+        borderRadius: 5
+    },
 });
 
 class AddSkillItemBox extends Component {
@@ -18,6 +26,7 @@ class AddSkillItemBox extends Component {
         super(props);
         this.state = {
             classes: props.classes,
+            dialogOpen: false,
             onNewSkillAdded: props.onNewSkillAdded,
             skillData: {}
         };
@@ -90,6 +99,19 @@ class AddSkillItemBox extends Component {
                         onChange={e => this.handleSkillDataChange('name', e.target.value)}
                     />
                     {/* TODO: Add a list to choose a skill icon */}
+                    <FormControl component="fieldset" className={classes.fieldset}>
+                        <FormLabel component="legend" >
+                            <Box px={1 / 2}><Typography variant="caption">{"Level"}</Typography></Box>
+                        </FormLabel>
+                        <FormGroup row>
+                            <ProficiencyIndicator
+                                editable
+                                level={1}
+                                length={5}
+                                size={'20px'} />
+                        </FormGroup>
+                    </FormControl>
+
                     {/* TODO: Add a skill level selector */}
                     <TextField
                         id="skill-description"
