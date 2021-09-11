@@ -4,3 +4,20 @@ export const getSkills = async () => {
     const skills = await fetch(API_URL + '/skills');
     return skills;
 };
+
+export const addSkill = async (skill) => {
+    const newSkill = {
+        name: skill.name,
+        description: skill.description,
+        level: skill.level,
+        iconName: skill.iconName,
+    };
+
+    const createdSkill = await fetch(API_URL + '/skills', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: newSkill,
+    });
+
+    return createdSkill;
+};
