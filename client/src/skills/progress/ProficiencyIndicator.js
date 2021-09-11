@@ -24,13 +24,14 @@ class ProficiencyIndicator extends Component {
             level: props.level,
             length: props.length,
             editable: props.editable,
-            size: props.size
+            size: props.size || '12px',
+            defaultStyle: {...defaultProps},
+            levelStyle: {...levelProps},
         };
 
-        if (props.size) {
-            defaultProps.style = { width: props.size, height: props.size };
-            levelProps.style = { width: props.size, height: props.size };
-        }
+        const size = this.state.size;
+        this.state.defaultStyle.style = { width: size, height: size };
+        this.state.levelStyle.style = { width: size, height: size };
     }
 
     changeLevel(level) {
@@ -40,17 +41,16 @@ class ProficiencyIndicator extends Component {
     }
 
     render() {
-        let { level, length, editable } = this.state;
+        let { level, length, editable, defaultStyle, levelStyle } = this.state;
         let changeLevelOnClick = () => { };
         if (editable) {
             changeLevelOnClick = (newLevel) => this.changeLevel(newLevel);
         }
 
         return <Box display="flex">
-            {[...Array(level)].map((x, i) => <Box key={i} onClick={() => changeLevelOnClick(i + 1)} {...levelProps} />)}
-            {[...Array(length - level)].map((x, i) => <Box key={i + level} onClick={() => changeLevelOnClick(i + level + 1)} {...defaultProps} />)}
+            {[...Array(level)].map((x, i) => <Box key={i} onClick={() => changeLevelOnClick(i + 1)} {...levelStyle} />)}
+            {[...Array(length - level)].map((x, i) => <Box key={i + level} onClick={() => changeLevelOnClick(i + level + 1)} {...defaultStyle} />)}
         </Box>;
-        // return `Level ${level} out of 5`;
     }
 }
 
