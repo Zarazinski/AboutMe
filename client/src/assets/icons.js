@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { withStyles } from "@material-ui/styles";
 import JavaColor from "./images/skills/java-color.svg";
 import JavaBlack from "./images/skills/java-black.svg";
 import PythonColor from "./images/skills/python-color.svg";
@@ -20,12 +20,20 @@ const icons = {
     default: { icon: Gears, title: "Generic skill logo" }
 };
 
-class SkillIcon extends Component {
+const useStyles = theme => ({
+    image: {
+        display: 'block'
+    }
+});
+
+
+class PureSkillIcon extends Component {
     render() {
         let { icon, title } = icons[this.props.name] ? icons[this.props.name] : icons.default;
 
-        return <img src={icon} alt={title} width={this.props.width} height={this.props.height} />;
+        return <img className={this.props.classes.image} onClick={this.props.onClick} src={icon} alt={title} width={this.props.width} height={this.props.height} />;
     }
 };
 
+const SkillIcon = withStyles(useStyles)(PureSkillIcon);
 export { SkillIcon, icons };

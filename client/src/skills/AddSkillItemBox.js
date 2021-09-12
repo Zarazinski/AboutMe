@@ -5,6 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 
 import * as SkillsAPI from "./SkillsAPI.js";
 import ProficiencyIndicator from "./progress/ProficiencyIndicator.js";
+import IconSelector from "../assets/IconSelector.js";
 
 const useStyles = theme => ({
     dialog: {
@@ -98,6 +99,7 @@ class AddSkillItemBox extends Component {
                         margin="normal"
                         onChange={e => this.handleSkillDataChange('name', e.target.value)}
                     />
+                    <IconSelector />
                     {/* TODO: Add a list to choose a skill icon */}
                     <FormControl component="fieldset" className={classes.fieldset}>
                         <FormLabel component="legend" >
@@ -111,8 +113,6 @@ class AddSkillItemBox extends Component {
                                 size={'20px'} />
                         </FormGroup>
                     </FormControl>
-
-                    {/* TODO: Add a skill level selector */}
                     <TextField
                         id="skill-description"
                         label="Description"
