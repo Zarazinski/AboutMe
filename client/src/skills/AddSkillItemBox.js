@@ -22,6 +22,7 @@ const useStyles = theme => ({
     },
 });
 
+const emptySkillData = { name: "", level: 1, description: "", iconName: "" };
 class AddSkillItemBox extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,7 @@ class AddSkillItemBox extends Component {
             classes: props.classes,
             dialogOpen: false,
             onNewSkillAdded: props.onNewSkillAdded,
-            skillData: {}
+            skillData: emptySkillData,
         };
     }
 
@@ -42,7 +43,7 @@ class AddSkillItemBox extends Component {
     closeDialog() {
         this.setState({
             dialogOpen: false,
-            skillData: {}
+            skillData: emptySkillData
         });
     }
 
@@ -59,12 +60,19 @@ class AddSkillItemBox extends Component {
             })
             .then(skill => {
                 this.closeDialog();
-                this.state.onNewSkillAdded(skill);
+                if (this.state.onNewSkillAdded) {
+                    this.state.onNewSkillAdded(skill);
+                }
             })
-            .catch(error => error.response
-                .text()
-                .then(text => this.setState({ errorMessage: `${error.message}: ${text}` }))
-            );
+            .catch(error => {
+                if (error.response) {
+                    error.response
+                        .text()
+                        .then(text => this.setState({ errorMessage: `${error.message}: ${text}` }));
+                } else {
+                    console.log(error);
+                }
+            });
     }
 
     handleSkillDataChange(field, value) {
@@ -99,8 +107,7 @@ class AddSkillItemBox extends Component {
                         margin="normal"
                         onChange={e => this.handleSkillDataChange('name', e.target.value)}
                     />
-                    <IconSelector />
-                    {/* TODO: Add a list to choose a skill icon */}
+                    <IconSelector onIconSelected={(icon) => this.handleSkillDataChange('iconName', icon[0])} />
                     <FormControl component="fieldset" className={classes.fieldset}>
                         <FormLabel component="legend" >
                             <Box px={1 / 2}><Typography variant="caption">{"Level"}</Typography></Box>
@@ -110,6 +117,7 @@ class AddSkillItemBox extends Component {
                                 editable
                                 level={1}
                                 length={5}
+                                onLevelSelected={(level) => this.handleSkillDataChange('level', level)}
                                 size={'20px'} />
                         </FormGroup>
                     </FormControl>
@@ -120,7 +128,7 @@ class AddSkillItemBox extends Component {
                         rows={2}
                         variant="outlined"
                         margin="normal"
-                        onChange={e => this.handleSkillDataChange('name', e.target.value)}
+                        onChange={e => this.handleSkillDataChange('description', e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>

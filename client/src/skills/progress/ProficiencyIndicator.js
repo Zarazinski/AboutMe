@@ -24,6 +24,7 @@ class ProficiencyIndicator extends Component {
             level: props.level,
             length: props.length,
             editable: props.editable,
+            onLevelSelected: props.onLevelSelected,
             size: props.size || '12px',
             defaultStyle: { ...defaultProps },
             levelStyle: { ...levelProps },
@@ -41,6 +42,7 @@ class ProficiencyIndicator extends Component {
         this.setState({
             level: level,
         });
+        this.state.onLevelSelected(level);
     }
 
     render() {

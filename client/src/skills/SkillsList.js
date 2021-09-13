@@ -34,8 +34,18 @@ class SkillsList extends Component {
     componentDidMount() {
         SkillsAPI.getSkills()
             .then(response => response.json())
-            .then(skills => skills.sort((s1, s2) => s2.level - s1.level))
-            .then(skills => this.setState({ skills: skills, showCount: Math.min(INITIAL_SHOW_COUNT, skills.length) }));
+            .then(skills => this.applySkills(skills, Math.min(INITIAL_SHOW_COUNT, skills.length)));
+    }
+
+    applySkills(skills, showCount) {
+        const skillsSorted = skills.sort((s1, s2) => s2.level - s1.level);
+        this.setState({ skills: skillsSorted, showCount: showCount });
+    }
+
+    onNewSkillAdded(skill) {
+        const skills = this.state.skills;
+        skills.push(skill);
+        this.applySkills(skills, this.state.showCount + 1);
     }
 
     render() {
@@ -63,7 +73,7 @@ class SkillsList extends Component {
                         </Box>
                     }
                     <Divider />
-                    <AddSkillItemBox />
+                    <AddSkillItemBox onNewSkillAdded={(skill) => this.onNewSkillAdded(skill)} />
                 </Paper>
             </Fragment>
         );

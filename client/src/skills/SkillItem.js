@@ -25,17 +25,13 @@ class SkillItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: props.data.name,
             description: props.data.description,
             level: props.data.level,
             iconName: props.data.iconName,
             classes: props.classes,
             showMore: false,
         };
-    }
-
-    getSuffix() {
-        // Todo: Store the icons' colors property
-        return "Color";
     }
 
     onShowMoreClick() {
@@ -45,7 +41,7 @@ class SkillItem extends Component {
     }
 
     render() {
-        let { description, level, iconName, classes, showMore } = this.state;
+        let { name, description, level, iconName, classes, showMore } = this.state;
 
         return (
 
@@ -53,13 +49,13 @@ class SkillItem extends Component {
                 <ListItem alignItems="flex-start" button onClick={() => this.onShowMoreClick()} className={classes.root}>
                     <ListItemAvatar>
                         <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
-                            <SkillIcon name={iconName + this.getSuffix()} width={32} height={32} />
+                            <SkillIcon name={iconName} width={32} height={32} />
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText disableTypography
                         primary={
                             <Typography color="textPrimary">
-                                {description}
+                                {name}
                             </Typography>
                         }
                         secondary={
@@ -67,8 +63,7 @@ class SkillItem extends Component {
                                 <ProficiencyIndicator level={level} length={5}/>
                                 <Box mt={1}/>
                                 <Collapse in={showMore} timeout="auto" unmountOnExit>
-                                    {/* TODO */}
-                                    {"Here is more information about this skill"}
+                                    {description}
                                 </Collapse>
                             </Fragment>
                         } />

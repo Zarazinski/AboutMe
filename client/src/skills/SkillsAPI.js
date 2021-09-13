@@ -16,7 +16,7 @@ export const addSkill = async (skill) => {
     const createdSkill = await fetch(API_URL + '/skills', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: newSkill,
+        body: JSON.stringify(newSkill),
     });
 
     return createdSkill;

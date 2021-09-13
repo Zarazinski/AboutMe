@@ -15,6 +15,7 @@ class IconSelector extends Component {
         this.setState({
             selectedIconName: icon[0],
         });
+        this.state.onIconSelected(icon);
     }
 
     getIcons() {
@@ -30,7 +31,7 @@ class IconSelector extends Component {
                 spacing={1}>
                 {this.getIcons().map(icon => {
                     let borderColor = icon[0] === this.state.selectedIconName ? "#40da40" : "#c4c4c4";
-                    return (<Grid item><Box border={2} p={1 / 2} borderRadius={4} borderColor={borderColor}><SkillIcon onClick={() => this.onIconSelected(icon)} name={icon[0]} withd={32} height={32} /></Box></Grid>);
+                    return (<Grid item key={icon[0]}><Box border={2} p={1 / 2} borderRadius={4} borderColor={borderColor}><SkillIcon onClick={() => this.onIconSelected(icon)} name={icon[0]} withd={32} height={32} /></Box></Grid>);
                 })}
             </Grid>
         );
