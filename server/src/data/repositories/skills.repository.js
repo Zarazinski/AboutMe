@@ -11,8 +11,8 @@ module.exports = class SkillsRepository {
     }
 
     static async add(skill) {
-        console.log(skill);
         return await SkillModel.create({
+            name: skill.name,
             description: skill.description,
             level: skill.level,
             iconName: skill.iconName,
@@ -24,7 +24,6 @@ module.exports = class SkillsRepository {
     }
 
     static async update(skill) {
-        console.log(skill);
         return await SkillModel.findByIdAndUpdate(skill.id, skill);
     }
 }
