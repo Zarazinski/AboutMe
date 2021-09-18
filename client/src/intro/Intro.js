@@ -130,7 +130,7 @@ class Intro extends Component {
                                 <EditIcon fontSize="medium" />
                             </IconButton>}>
                             <Typography variant="h2" color="textPrimary" gutterBottom>
-                                About me
+                                {activeIntro.title}
                             </Typography>
                         </Badge>
                         <Typography variant="subtitle1" color="textSecondary" paragraph>
