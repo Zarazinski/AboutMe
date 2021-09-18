@@ -1,7 +1,8 @@
 import { Component } from "react";
-import { Avatar, Badge, Typography, Grid, IconButton } from "@material-ui/core";
+import { Avatar, Button, Badge, Typography, Grid, IconButton, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
+import EditIcon from '@material-ui/icons/Edit';
 
 import * as IntrosAPI from "./IntroAPI";
 
@@ -33,6 +34,8 @@ class Intro extends Component {
         this.state = {
             intros: [],
             activeIntro: {},
+            updatedIntro: {},
+            openEditIntroDialog: false,
             classes: props.classes
         };
     }
@@ -66,6 +69,26 @@ class Intro extends Component {
             });
     }
 
+    onEditIntroClick() {
+        this.setState(prevState => ({
+            openEditIntroDialog: true,
+            updatedIntro: { ...prevState.activeIntro }
+        }));
+    }
+
+    closeDialog() {
+        this.setState({
+            openEditIntroDialog: false,
+        });
+    }
+
+    onUpdateIntroClick() {
+        const changedIntro = this.state.updatedIntro;
+        const mergedIntro = { ...this.state.activeIntro, ...changedIntro };
+        this.updateIntro(mergedIntro);
+        this.closeDialog();
+    }
+
     render() {
         const classes = this.state.classes;
         const addPhotoForm = <div>
@@ -87,7 +110,7 @@ class Intro extends Component {
             </label>
         </div>;
 
-        let { activeIntro } = this.state;
+        let { activeIntro, openEditIntroDialog, updatedIntro } = this.state;
 
         return (
             <div style={{ padding: 20 }}>
@@ -102,14 +125,54 @@ class Intro extends Component {
                         </Badge>
                     </Grid>
                     <Grid item xs={12} sm={6} md={8}>
-                        <Typography variant="h2" color="textPrimary" gutterBottom>
-                            About me
-                        </Typography>
+                        <Badge className={classes.center}
+                            badgeContent={<IconButton onClick={() => this.onEditIntroClick()} component="spand">
+                                <EditIcon fontSize="medium" />
+                            </IconButton>}>
+                            <Typography variant="h2" color="textPrimary" gutterBottom>
+                                About me
+                            </Typography>
+                        </Badge>
                         <Typography variant="subtitle1" color="textSecondary" paragraph>
                             {activeIntro.description}
                         </Typography>
                     </Grid>
                 </Grid>
+                <Dialog
+                    maxWidth="sm"
+                    fullWidth
+                    open={openEditIntroDialog}>
+                    <DialogTitle>
+                        Edit intro
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            id="intro-title"
+                            label="Title"
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            value={updatedIntro.title}
+                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, title: e.value } }))}
+                        />
+                        <TextField
+                            id="intro-description"
+                            label="Description"
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            rows={4}
+                            value={updatedIntro.description}
+                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, description: e.value } }))}
+                        />
+                        <DialogActions>
+                            <Button onClick={() => this.closeDialog()} color="secondary">Cancel</Button>
+                            <div style={{ flex: '1 0 0' }} />
+                            <Button onClick={() => this.onUpdateIntroClick()} color="primary">Update</Button>
+                        </DialogActions>
+                    </DialogContent>
+                </Dialog>
             </div>
         );
     }
