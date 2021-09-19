@@ -125,15 +125,12 @@ class Intro extends Component {
                         </Badge>
                     </Grid>
                     <Grid item xs={12} sm={6} md={8}>
-                        <Badge className={classes.center}
-                            badgeContent={<IconButton onClick={() => this.onEditIntroClick()} component="spand">
-                                <EditIcon fontSize="medium" />
-                            </IconButton>}>
-                            <Typography variant="h2" color="textPrimary" gutterBottom>
+                        <Badge className={classes.center} badgeContent={<IconButton onClick={() => this.onEditIntroClick()} component="span"><EditIcon fontSize="medium" /></IconButton>}>
+                            <Typography variant="h2" color="textPrimary" align="center" gutterBottom>
                                 {activeIntro.title}
                             </Typography>
                         </Badge>
-                        <Typography variant="subtitle1" color="textSecondary" paragraph>
+                        <Typography variant="subtitle1" color="textSecondary" align="center" paragraph>
                             {activeIntro.description}
                         </Typography>
                     </Grid>
@@ -153,7 +150,7 @@ class Intro extends Component {
                             margin="normal"
                             fullWidth
                             value={updatedIntro.title}
-                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, title: e.value } }))}
+                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, title: e.target.value } }))}
                         />
                         <TextField
                             id="intro-description"
@@ -164,7 +161,7 @@ class Intro extends Component {
                             multiline
                             rows={4}
                             value={updatedIntro.description}
-                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, description: e.value } }))}
+                            onChange={e => this.setState(prevState => ({ updatedIntro: { ...prevState.updatedIntro, description: e.target.value } }))}
                         />
                         <DialogActions>
                             <Button onClick={() => this.closeDialog()} color="secondary">Cancel</Button>

@@ -13,6 +13,7 @@ export const updateIntro = async (intro) => {
     const id = intro.id;
 
     const newIntro = {
+        title: intro.title,
         description: intro.description,
         active: intro.active,
         avatar: intro.avatar,
