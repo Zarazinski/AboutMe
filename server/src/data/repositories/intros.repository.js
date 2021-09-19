@@ -12,6 +12,7 @@ module.exports = class IntrosRepository {
 
     static async add(intro) {
         return await IntroModel.create({
+            title: intro.title,
             description: intro.description,
             active: intro.active,
             avatar: intro.avatar,
