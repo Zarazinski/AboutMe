@@ -12,6 +12,9 @@ const useStyles = theme => ({
             margin: theme.spacing(0.5),
         },
     },
+    item: {
+        paddingRight: '0',
+    },
     lightDark: {
         backgroundColor: "#F8F8F8",
     },
@@ -67,7 +70,7 @@ class SkillItem extends Component {
         return (
 
             <Fragment>
-                <ListItem className={classes.root}>
+                <ListItem className={`${classes.root} ${classes.item}`}>
                     <ListItemAvatar>
                         <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
                             <SkillIcon name={iconName} width={32} height={32} />
