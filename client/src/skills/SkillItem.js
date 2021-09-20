@@ -1,8 +1,8 @@
 import { Component, Fragment } from "react";
-import { Avatar, Box, Collapse, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
+import { Avatar, Box, Collapse, IconButton, ListItem, ListItemAvatar, ListItemText, Typography, Menu, MenuItem } from "@material-ui/core";
 import { SkillIcon } from "../assets/icons";
 import { withStyles } from '@material-ui/core/styles';
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { ExpandLess, ExpandMore, MoreVert } from "@material-ui/icons";
 import ProficiencyIndicator from "./progress/ProficiencyIndicator";
 
 const useStyles = theme => ({
@@ -40,13 +40,34 @@ class SkillItem extends Component {
         }));
     }
 
+    handleOpenMenuClick(el) {
+        this.setState({
+            anchorEl: el
+        });
+    }
+
+    handleCloseMenuClick() {
+        this.setState({
+            anchorEl: null
+        });
+    }
+
+    handleDeleteSkillClick() {
+        // TODO
+    }
+
+    handleEditSkillClick() {
+        // TODO
+    }
+
     render() {
-        let { name, description, level, iconName, classes, showMore } = this.state;
+        let { name, description, level, iconName, classes, showMore, anchorEl } = this.state;
+        let menuOpen = Boolean(anchorEl);
 
         return (
 
             <Fragment>
-                <ListItem alignItems="flex-start" button onClick={() => this.onShowMoreClick()} className={classes.root}>
+                <ListItem className={classes.root}>
                     <ListItemAvatar>
                         <Avatar className={`${classes.lightDark} ${classes.mediumAvatar}`}>
                             <SkillIcon name={iconName} width={32} height={32} />
@@ -60,14 +81,40 @@ class SkillItem extends Component {
                         }
                         secondary={
                             <Fragment>
-                                <ProficiencyIndicator level={level} length={5}/>
-                                <Box mt={1}/>
+                                <ProficiencyIndicator level={level} length={5} />
+                                <Box mt={1} />
                                 <Collapse in={showMore} timeout="auto" unmountOnExit>
                                     {description}
                                 </Collapse>
                             </Fragment>
                         } />
-                    {showMore ? <ExpandLess /> : <ExpandMore />}
+                    <Fragment>
+                        {showMore ?
+                            <IconButton onClick={() => this.onShowMoreClick()}>
+                                <ExpandLess />
+                            </IconButton>
+                            :
+                            <IconButton onClick={() => this.onShowMoreClick()}>
+                                <ExpandMore />
+                            </IconButton>
+                        }
+                        <Fragment>
+                            <IconButton aria-label="settings" aria-controls="skill-menu" aria-haspopup="true" onClick={(e) => this.handleOpenMenuClick(e.currentTarget)}>
+                                <MoreVert />
+                            </IconButton>
+                            <Menu
+                                id="skill-menu"
+                                anchorEl={anchorEl}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                keepMounted
+                                open={menuOpen}
+                                onClose={() => this.handleCloseMenuClick()}
+                            >
+                                <MenuItem disabled onClick={() => this.handleEditSkillClick()}>Edit</MenuItem>
+                                <MenuItem onClick={() => this.handleDeleteSkillClick()}>Delete</MenuItem>
+                            </Menu>
+                        </Fragment>
+                    </Fragment>
                 </ListItem>
             </Fragment>
         );

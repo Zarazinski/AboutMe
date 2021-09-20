@@ -164,7 +164,6 @@ class AddProjectBox extends Component {
                             autoSelect
                             onInputChange={(event, newInputValue) => {
                                 if (newInputValue.endsWith(',')) {
-                                    console.log(newInputValue);
                                     event.target.blur();
                                     event.target.focus();
                                 }

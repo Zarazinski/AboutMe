@@ -60,8 +60,8 @@ class SkillsList extends Component {
                 </Box>
 
                 <Paper elevation={0} variant="outlined">
-                    <List>
-                        {skills.slice(0, showCount).map(skill => <SkillItem key={skill.id} data={skill} />)}
+                    <List disablePadding>
+                        {skills.slice(0, showCount).map(skill => <SkillItem removable={true} key={skill.id} data={skill} />)}
                     </List>
                     <Divider />
                     {skills.length > INITIAL_SHOW_COUNT &&
