@@ -13,25 +13,26 @@ class SkillsList extends Component {
         this.state = {
             skills: [],
             showCount: INITIAL_SHOW_COUNT,
-            showAll: false,
         };
     }
 
     onShowAllClick() {
         this.setState(prevState => ({
-            showCount: prevState.skills.length,
-            showAll: true,
+            showCount: prevState.skills.length
         }));
     }
 
     onShowLessClick() {
         this.setState(prevState => ({
-            showCount: Math.min(INITIAL_SHOW_COUNT, prevState.skills.length),
-            showAll: false,
+            showCount: Math.min(INITIAL_SHOW_COUNT, prevState.skills.length)
         }));
     }
 
     componentDidMount() {
+        this.loadSkills();
+    }
+
+    loadSkills() {
         SkillsAPI.getSkills()
             .then(response => response.json())
             .then(skills => this.applySkills(skills, Math.min(INITIAL_SHOW_COUNT, skills.length)));
@@ -48,8 +49,14 @@ class SkillsList extends Component {
         this.applySkills(skills, this.state.showCount + 1);
     }
 
+    onSkillRemoved(skillId) {
+        const skills = this.state.skills.filter(skill => skill.id !== skillId);
+        this.applySkills(skills, Math.max(INITIAL_SHOW_COUNT, this.state.showCount - 1));
+    }
+
     render() {
-        let { skills, showCount, showAll } = this.state;
+        let { skills, showCount } = this.state;
+        let showAll = showCount === skills.length;
 
         return (
             <Fragment>
@@ -61,7 +68,7 @@ class SkillsList extends Component {
 
                 <Paper elevation={0} variant="outlined">
                     <List disablePadding>
-                        {skills.slice(0, showCount).map(skill => <SkillItem removable={true} key={skill.id} data={skill} />)}
+                        {skills.slice(0, showCount).map(skill => <SkillItem removable={true} onSkillRemoved={() => this.onSkillRemoved(skill.id)} key={skill.id} data={skill} />)}
                     </List>
                     <Divider />
                     {skills.length > INITIAL_SHOW_COUNT &&

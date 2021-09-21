@@ -21,3 +21,11 @@ export const addSkill = async (skill) => {
 
     return createdSkill;
 };
+
+export const deleteSkill = async (skillId) => {
+    const response = await fetch(API_URL + '/skills/' + skillId, {
+        method: 'delete'
+    });
+
+    return response;
+};

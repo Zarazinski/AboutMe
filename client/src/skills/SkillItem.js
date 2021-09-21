@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { ExpandLess, ExpandMore, MoreVert } from "@material-ui/icons";
 import ProficiencyIndicator from "./progress/ProficiencyIndicator";
 
+import * as SkillsAPI from "./SkillsAPI.js";
+
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -28,12 +30,14 @@ class SkillItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.data.id,
             name: props.data.name,
             description: props.data.description,
             level: props.data.level,
             iconName: props.data.iconName,
             classes: props.classes,
             showMore: false,
+            onSkillRemoved: props.onSkillRemoved,
         };
     }
 
@@ -56,7 +60,16 @@ class SkillItem extends Component {
     }
 
     handleDeleteSkillClick() {
-        // TODO
+        SkillsAPI.deleteSkill(this.state.id)
+            .then(response => {
+                if (response.ok) {
+                    this.state.onSkillRemoved();
+                }
+            });
+
+        this.setState({
+            anchorEl: null
+        });
     }
 
     handleEditSkillClick() {
