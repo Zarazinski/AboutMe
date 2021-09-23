@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
-import { Button, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Box, Typography, Paper } from "@material-ui/core";
+import { Button, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Box, Typography, Paper, Divider } from "@material-ui/core";
 import * as BooksAPI from "./BooksAPI";
+import AddBookBox from "./AddBookBox";
 
 const INITIAL_SHOW_COUNT = 5;
 
@@ -8,7 +9,6 @@ class BooksTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAll: false,
             showCount: INITIAL_SHOW_COUNT,
             books: []
         };
@@ -23,19 +23,18 @@ class BooksTable extends Component {
     onShowAllClick() {
         this.setState(prevState => ({
             showCount: prevState.books.length,
-            showAll: true,
         }));
     }
 
     onShowLessClick() {
         this.setState({
             showCount: INITIAL_SHOW_COUNT,
-            showAll: false,
         });
     }
 
     render() {
-        let { showAll, showCount, books } = this.state;
+        let { showCount, books } = this.state;
+        let showAll = showCount === books.length;
         return (
             <Fragment>
                 <Box my={4}>
@@ -73,6 +72,8 @@ class BooksTable extends Component {
                                 }
                             </Box>
                         }
+                        <Divider />
+                        <AddBookBox />
                     </TableContainer>
                 </Paper>
             </Fragment>
