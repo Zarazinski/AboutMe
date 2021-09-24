@@ -43,7 +43,8 @@ class AddSkillItemBox extends Component {
     closeDialog() {
         this.setState({
             dialogOpen: false,
-            skillData: emptySkillData
+            skillData: emptySkillData,
+            errorMessage: null,
         });
     }
 
